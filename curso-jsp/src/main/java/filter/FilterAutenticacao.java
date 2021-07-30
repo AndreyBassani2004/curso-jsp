@@ -1,64 +1,86 @@
 package filter;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.FilterConfig;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
-import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import connection.SingleConnectionBanco;
 
-@WebFilter(urlPatterns = {"/principal/*"})//Interceptas todas as requisicoes que vierem do projeto ou mapeamento 
+@WebFilter(urlPatterns = { "/principal/*" }) // Interceptas todas as requisicoes que vierem do projeto ou mapeamento
 public class FilterAutenticacao implements Filter {
 
-   
-    public FilterAutenticacao() {
-       
-    }
+	private static Connection connection;
 
-	//Encerra os processos quando o servidor é parado
-    //Mataria conexao do banco
-	public void destroy() {
-		
+	public FilterAutenticacao() {
+
 	}
 
-	//intercepta todas as requisicoes no sistema
-	//Tudo que o sistema vai fazer passa por ele
-	//Validar autenticacao
-	//Dar commit e roolback de transacoes do banco
-	//Validar e fazer redirecionamento de pagina
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpSession session = req.getSession();
-		
-		String usuarioLogado = (String) session.getAttribute("usuario");
-		
-		String urlParaAutenticar = req.getServletPath();//url sendo acessada
-		
-		//Validar se estar logado, se nao redirecionar para tela de login
-		if(usuarioLogado == null  && !urlParaAutenticar.equalsIgnoreCase("/principal/ServletLogin") ) {//Nao Logado
-			
-			RequestDispatcher redireciona = request.getRequestDispatcher("/index.jsp?url=" + urlParaAutenticar);
-			request.setAttribute("msg", "Por favor realize o login");
-			redireciona.forward(request, response);
-			return;//Para a execucao e direciona para o login 
-		}else {
-		
-		chain.doFilter(request, response);
+	// Encerra os processos quando o servidor é parado
+	// Mataria conexao do banco
+	public void destroy() {
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	// intercepta todas as requisicoes no sistema
+	// Tudo que o sistema vai fazer passa por ele
+	// Validar autenticacao
+	// Dar commit e roolback de transacoes do banco
+	// Validar e fazer redirecionamento de pagina
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+
+		try {
+			HttpServletRequest req = (HttpServletRequest) request;
+			HttpSession session = req.getSession();
+
+			String usuarioLogado = (String) session.getAttribute("usuario");
+
+			String urlParaAutenticar = req.getServletPath();// url sendo acessada
+
+			// Validar se estar logado, se nao redirecionar para tela de login
+			if (usuarioLogado == null && !urlParaAutenticar.equalsIgnoreCase("/principal/ServletLogin")) {// Nao Logado
+
+				RequestDispatcher redireciona = request.getRequestDispatcher("/index.jsp?url=" + urlParaAutenticar);
+				request.setAttribute("msg", "Por favor realize o login");
+				redireciona.forward(request, response);
+				return;// Para a execucao e direciona para o login
+			} else {
+
+				chain.doFilter(request, response);
+			}
+			connection.commit();//deu certo, commit no banco de dados
+		} catch (Exception e) {
+			e.printStackTrace();
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
 
-	//Inicia os processos e configuracao do servidor sobre o projeto
-	//Iniciar conexao com o banco
+	// Inicia os processos e configuracao do servidor sobre o projeto
+	// Iniciar conexao com o banco
 	public void init(FilterConfig fConfig) throws ServletException {
-		
+		connection = SingleConnectionBanco.getConnection();
+
 	}
 
 }
