@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,12 +7,13 @@
 <title>Index</title>
 </head>
 <body>
-<h1>Cadastre as informacoes:</h1>
+	<h1>Cadastre as informacoes:</h1>
 	<br>
 	<br>
 
 	<form action="ServletLogin" method="post">
-	<input type="hidden" value = "<%= request.getParameter("url") %>" name = "url"> 
+		<input type="hidden" value="<%=request.getParameter("url")%>"
+			name="url">
 
 		<table>
 			<tr>
