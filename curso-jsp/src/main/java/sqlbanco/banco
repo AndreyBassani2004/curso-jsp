@@ -1,0 +1,24 @@
+
+//Criacao da tabela
+
+CREATE TABLE public."Model_Login"
+(
+  login character varying(200),
+  senha character varying(200),
+  CONSTRAINT login_unique UNIQUE (login)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public."Model_Login"
+  OWNER TO postgres;
+  
+  
+ //Inserir dados
+  
+  INSERT INTO public."model_login"(
+            login, senha)
+    VALUES ('admin', 'admin');
+
+
+select * from model_login;
