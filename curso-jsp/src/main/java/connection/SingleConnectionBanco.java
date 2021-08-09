@@ -3,6 +3,8 @@ package connection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+
+
 public class SingleConnectionBanco {
 	
 	private static String banco = "jdbc:postgresql://localhost:5432/curso-jsp?autoReconnect=true";
@@ -37,6 +39,9 @@ public class SingleConnectionBanco {
 			
 		} catch (Exception e) {
 			e.printStackTrace();//Mostrar erro no momento de conectar
+			
+			
+			
 		}
 	}
 

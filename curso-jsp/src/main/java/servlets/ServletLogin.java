@@ -55,19 +55,23 @@ public class ServletLogin extends HttpServlet {
 					redirecionar.forward(request, response);
 				} else {
 					RequestDispatcher redirecionar = request.getRequestDispatcher("/index.jsp");
-					request.setAttribute("msg", "Senha ou Login incorreto");
+					request.setAttribute("msg", "Senha ou Login incorreto!");
 					redirecionar.forward(request, response);
 
 				}
 
 			} else {
 				RequestDispatcher redirecionar = request.getRequestDispatcher("index.jsp");
-				request.setAttribute("msg", "Preencha todos os campos");
+				request.setAttribute("msg", "Senha ou Login incorreto!");
 				redirecionar.forward(request, response);
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			
+			RequestDispatcher redirecionar = request.getRequestDispatcher("erro.jsp");
+			request.setAttribute("msg", e.getMessage());
+			redirecionar.forward(request, response);
 		}
 	}
 
