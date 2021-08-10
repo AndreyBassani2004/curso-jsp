@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>ERRO</title>
+<title>Curso-JSP</title>
 </head>
 <body>
 
