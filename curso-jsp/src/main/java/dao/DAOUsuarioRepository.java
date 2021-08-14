@@ -59,7 +59,7 @@ public class DAOUsuarioRepository {
 
 		ResultSet resultado = statement.executeQuery();
 		
-		resultado.next();//Para entrar nos resultados do sql
+		resultado.next();//Para entrar nos resultados do sql f
 		return resultado.getBoolean("existe");
 
 	}
