@@ -52,7 +52,7 @@ public class DAOUsuarioRepository {
 		return modelLogin;
 
 	}
-
+//
 	public boolean validarLogin(String login) throws Exception {
 		String sql = "select count(1) > 0 as existe from model_login where upper(login) = upper('"+login+"');";
 		PreparedStatement statement = connection.prepareStatement(sql);
