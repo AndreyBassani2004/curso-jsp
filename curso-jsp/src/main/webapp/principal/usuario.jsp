@@ -140,7 +140,8 @@
 							</div>
 						</div>
 
-						<table class="table">
+<div style="height: 300px;overflow: scroll;" >
+						<table class="table" id="tabelaResultados">
 							<thead>
 								<tr>
 									<th scope="col">ID</th>
@@ -155,9 +156,11 @@
 						</table>
 
 					</div>
+		<span id="totalResultado"></span>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Fecha</button>
-
+                      
+                      </div>
 					</div>
 				</div>
 			</div>
@@ -179,8 +182,18 @@
 							data : "nomeBusca=" + nomeBusca
 									+ '&acao=buscarUserAjax',
 							success : function(response) {
+								
+								//Converter dados para json
+								var json = JSON.parse(response);
+								
+								console.info(json);
 
-								alert(response)
+							   $('#tabelaResultados > tbody > tr').remove();
+							   
+							   for(var p = 0; p < json.length; p++){
+								   $('#tabelaResultados > tbody').append('<tr> <td>'+json[p].id+'</td> <td>'+json[p].nome+'</td> <td><button type="button" class="btn btn-info">Ver</button></td> </tr>');
+							   }
+							   document.getElementById('totalResultado').textContent = 'Resultados: ' + json.length;
 							}
 
 						})
@@ -241,6 +254,7 @@
 				for (p = 0; p < elementos.length; p++) {
 					elementos[p].value = '';
 				}
+				
 
 			}
 		</script>
