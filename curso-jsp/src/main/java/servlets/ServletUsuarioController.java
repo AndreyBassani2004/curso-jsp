@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.core.JsonParser;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.DAOUsuarioRepository;
@@ -39,7 +39,9 @@ public class ServletUsuarioController extends HttpServlet {
 			
 			daoUsuarioRepository.deletarUser(idUser);
 			
-			request.setAttribute("msg", "Excluido com Sucesso!");
+			
+			request.setAttribute("msg", "Excluido com sucesso!");
+		
 			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 			
 			
