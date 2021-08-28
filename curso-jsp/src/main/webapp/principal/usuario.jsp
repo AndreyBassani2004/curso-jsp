@@ -180,17 +180,16 @@
 		function listarTodos(){
 			
 			var urlAction = document.getElementById('formUser').action;
-			var nomeBusca = document.getElementById('nomeBusca').value;
-			var ativar = 'true';
+			var ativar = true;
 			
-			if(ativar = 'true'){
+			if(ativar == true){
 				$.ajax(
 						{
 
 							method : "get",
 							url : urlAction,
-							data : "nomeBusca=" + nomeBusca
-									+ '&acao=listarDados',
+							data : 
+									 '&acao=listarDados',
 							success : function(response) {
 								
 									
