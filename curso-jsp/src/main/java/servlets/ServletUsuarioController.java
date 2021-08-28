@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.DAOUsuarioRepository;
 import model.ModelLogin;
 
-@WebServlet("/ServletUsuarioController")
+@WebServlet(urlPatterns = {"/ServletUsuarioController"})
 public class ServletUsuarioController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -39,6 +39,8 @@ public class ServletUsuarioController extends HttpServlet {
 			
 			daoUsuarioRepository.deletarUser(idUser);
 			
+			List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioList();
+			request.setAttribute("modelLogins", modelLogins);
 			
 			request.setAttribute("msg", "Excluido com sucesso!");
 		
@@ -47,6 +49,8 @@ public class ServletUsuarioController extends HttpServlet {
 			
 		}else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletarajax")) {
 			 String idUser = request.getParameter("id");
+			 
+			 
 			 
 			 daoUsuarioRepository.deletarUser(idUser);
 			 
@@ -65,6 +69,11 @@ public class ServletUsuarioController extends HttpServlet {
 		}else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarEditar")) {
 			String id = request.getParameter("id");
 			
+			
+			
+			List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioList();
+			request.setAttribute("modelLogins", modelLogins);
+			
 			ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioID(id);
 			
 			request.setAttribute("msg", "Usuario em edicao");
@@ -80,7 +89,18 @@ public class ServletUsuarioController extends HttpServlet {
 			 String json = mapper.writeValueAsString(dadosJsonUser);
 			 
 			 response.getWriter().write(json);
+			 
+		} else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("listarUser")) {
+			
+			List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioList();
+			
+
+			request.setAttribute("msg", "Usuario carregados!");
+			request.setAttribute("modelLogins", modelLogins);
+			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+			
 		}else {
+			
 			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 		}
 		

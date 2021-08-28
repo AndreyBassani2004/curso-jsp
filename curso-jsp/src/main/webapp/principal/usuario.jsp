@@ -1,16 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
 
-	
+
+
 <!DOCTYPE html>
 
 <jsp:include page="head.jsp"></jsp:include>
 
 <body>
+
 
 	<jsp:include page="theme-loader.jsp"></jsp:include>
 	<!-- Pre-loader end -->
@@ -102,10 +104,35 @@
 														</form>
 													</div>
 												</div>
+											</div>
+											</div>
+											<span id="msg">${msg}</span>
+											
 
+											<div style=" overflow: scroll;">
+												<table class="table" id="tabelaResultadosview">
+													<thead>
+														<tr>
+															<th scope="col">ID</th>
+															<th scope="col">Nome</th>
+															<th scope="col">Ver</th>
+
+														</tr>
+													</thead>
+													<tbody>
+													<c:forEach items='${modelLogins}' var="ml"> 
+													<tr>
+													<td><c:out value="${ml.id}"></c:out></td>
+													<td><c:out value="${ml.nome}"></c:out></td>
+													<td><a  class="btn btn-info"
+								 href="<%= request.getContextPath() %>/ServletUsuarioController?acao=buscarEditar&id=${ml.id}">Ver</a></td>
+													</tr>
+													</c:forEach>
+
+													</tbody>
+												</table>
 
 											</div>
-											<span>${msg}</span>
 										</div>
 
 										<!-- Page-body end -->
@@ -142,127 +169,147 @@
 							<input type="text" class="form-control" placeholder="Nome"
 								aria-label="nome" id="nomeBusca" aria-describedby="basic-addon2">
 							<div class="input-group-append">
-								<button class="btn btn-success" type="button" onclick="buscarUsuario()">Buscar</button>
-								
+								<button class="btn btn-success" type="button"
+									onclick="buscarUsuario()">Buscar</button>
+
 							</div>
 						</div>
 
-<div style="height: 300px;overflow: scroll;" >
-						<table class="table" id="tabelaResultados">
-							<thead>
-								<tr>
-									<th scope="col">ID</th>
-									<th scope="col">Nome</th>
-									<th scope="col">Ver</th>
-									
-								</tr>
-							</thead>
-							<tbody>
-								
-							</tbody>
-						</table>
+						<div style="height: 300px; overflow: scroll;">
+							<table class="table" id="tabelaResultados">
+								<thead>
+									<tr>
+										<th scope="col">ID</th>
+										<th scope="col">Nome</th>
+										<th scope="col">Ver</th>
 
-					</div>
-		<span id="totalResultado"></span>
-					<div class="modal-footer">
-					    <button type="button" class="btn btn-info" onclick="listarTodos()">Lista todos</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">Fecha</button>
-                      
-                      </div>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+
+						</div>
+						<span id="totalResultado"></span>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-info"
+								onclick="listarTodos()">Lista todos</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Fecha</button>
+
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
 		<script type="text/javascript">
-		
-		
-		function listarTodos(){
-			
-			var urlAction = document.getElementById('formUser').action;
-			var ativar = true;
-			
-			if(ativar == true){
-				$.ajax(
-						{
+			function listarTodos() {
 
-							method : "get",
-							url : urlAction,
-							data : 
-									 '&acao=listarDados',
-							success : function(response) {
-								
-									
-								//Converter dados para json
-								var json = JSON.parse(response);
-								
-								console.info(json);
+				var urlAction = document.getElementById('formUser').action;
+				var ativar = true;
 
-							   $('#tabelaResultados > tbody > tr').remove();
-							   
-							   for(var p = 0; p < json.length; p++){
-								   $('#tabelaResultados > tbody').append('<tr> <td>'+json[p].id+'</td> <td>'+json[p].nome+'</td> <td><button onclick="verEditar('+json[p].id+')" type="button" class="btn btn-info">Ver</button></td> </tr>');
-							   }
-							   document.getElementById('totalResultado').textContent = 'Resultados: ' + json.length;
-							}
-							
-						})
-				.fail(
-						function(xhr, status, errorThrown) {
-							alert('Erro ao listar Usuarios! '
-									+ xhr.responseText);
-						});
+				if (ativar == true) {
+					$
+							.ajax(
+									{
+
+										method : "get",
+										url : urlAction,
+										data : '&acao=listarDados',
+										success : function(response) {
+
+											//Converter dados para json
+											var json = JSON.parse(response);
+
+											console.info(json);
+
+											$('#tabelaResultados > tbody > tr')
+													.remove();
+
+											for (var p = 0; p < json.length; p++) {
+												$('#tabelaResultados > tbody')
+														.append(
+																'<tr> <td>'
+																		+ json[p].id
+																		+ '</td> <td>'
+																		+ json[p].nome
+																		+ '</td> <td><button onclick="verEditar('
+																		+ json[p].id
+																		+ ')" type="button" class="btn btn-info">Ver</button></td> </tr>');
+											}
+											document
+													.getElementById('totalResultado').textContent = 'Resultados: '
+													+ json.length;
+										}
+
+									}).fail(
+									function(xhr, status, errorThrown) {
+										alert('Erro ao listar Usuarios! '
+												+ xhr.responseText);
+									});
+				}
 			}
-		}
-			
-		
-		
-		function verEditar(id){
-			
-			var urlAction = document.getElementById('formUser').action;
-			
-			window.location.href = urlAction + '?acao=buscarEditar&id=' + id;
-			
-			
-		}
-		
-		function buscarUsuario(){
-			
-			var urlAction = document.getElementById('formUser').action;
-			var nomeBusca = document.getElementById('nomeBusca').value;
-			
-			if(nomeBusca != null && nomeBusca != '' && nomeBusca.trim() != ''){
-				$.ajax(
-						{
 
-							method : "get",
-							url : urlAction,
-							data : "nomeBusca=" + nomeBusca
-									+ '&acao=buscarUserAjax',
-							success : function(response) {
-								
-								//Converter dados para json
-								var json = JSON.parse(response);
-								
-								console.info(json);
+			function verEditar(id) {
 
-							   $('#tabelaResultados > tbody > tr').remove();
-							   
-							   for(var p = 0; p < json.length; p++){
-								   $('#tabelaResultados > tbody').append('<tr> <td>'+json[p].id+'</td> <td>'+json[p].nome+'</td> <td><button onclick="verEditar('+json[p].id+')" type="button" class="btn btn-info">Ver</button></td> </tr>');
-							   }
-							   document.getElementById('totalResultado').textContent = 'Resultados: ' + json.length;
-							}
+				var urlAction = document.getElementById('formUser').action;
 
-						})
-				.fail(
-						function(xhr, status, errorThrown) {
-							alert('Erro ao buscar usuario com nome! '
-									+ xhr.responseText);
-						});
+				window.location.href = urlAction + '?acao=buscarEditar&id='
+						+ id;
+
 			}
-		}
-		
+
+			function buscarUsuario() {
+
+				var urlAction = document.getElementById('formUser').action;
+				var nomeBusca = document.getElementById('nomeBusca').value;
+
+				if (nomeBusca != null && nomeBusca != ''
+						&& nomeBusca.trim() != '') {
+					$
+							.ajax(
+									{
+
+										method : "get",
+										url : urlAction,
+										data : "nomeBusca=" + nomeBusca
+												+ '&acao=buscarUserAjax',
+										success : function(response) {
+
+											//Converter dados para json
+											var json = JSON.parse(response);
+
+											console.info(json);
+
+											$('#tabelaResultados > tbody > tr')
+													.remove();
+
+											for (var p = 0; p < json.length; p++) {
+												$('#tabelaResultados > tbody')
+														.append(
+																'<tr> <td>'
+																		+ json[p].id
+																		+ '</td> <td>'
+																		+ json[p].nome
+																		+ '</td> <td><button onclick="verEditar('
+																		+ json[p].id
+																		+ ')" type="button" class="btn btn-info">Ver</button></td> </tr>');
+											}
+											document
+													.getElementById('totalResultado').textContent = 'Resultados: '
+													+ json.length;
+										}
+
+									})
+							.fail(
+									function(xhr, status, errorThrown) {
+										alert('Erro ao buscar usuario com nome! '
+												+ xhr.responseText);
+									});
+				}
+			}
+
 			function criarDeleteComAjax() {
 
 				if (confirm('Deseja realmente excluir dados?')) {
@@ -270,8 +317,8 @@
 					var urlAction = document.getElementById('formUser').action;
 					var idUser = document.getElementById('id').value;
 
-					
-							$.ajax(
+					$
+							.ajax(
 									{
 
 										method : "get",
@@ -312,8 +359,6 @@
 				for (p = 0; p < elementos.length; p++) {
 					elementos[p].value = '';
 				}
-				
-				
 
 			}
 		</script>
