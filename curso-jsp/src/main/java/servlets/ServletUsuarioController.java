@@ -70,6 +70,16 @@ public class ServletUsuarioController extends HttpServlet {
 			request.setAttribute("msg", "Usuario em edicao");
 			request.setAttribute("modelLogin", modelLogin);
 			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
+			
+		} else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("listarDados")) {
+			 String nome = request.getParameter("nomeBusca");
+			 
+			 List<ModelLogin> dadosJsonUser = daoUsuarioRepository.consultaUsuarioList(nome);
+			 
+			 ObjectMapper mapper = new ObjectMapper();
+			 String json = mapper.writeValueAsString(dadosJsonUser);
+			 
+			 response.getWriter().write(json);
 		}else {
 			request.getRequestDispatcher("principal/usuario.jsp").forward(request, response);
 		}

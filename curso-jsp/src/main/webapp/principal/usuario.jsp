@@ -143,6 +143,7 @@
 								aria-label="nome" id="nomeBusca" aria-describedby="basic-addon2">
 							<div class="input-group-append">
 								<button class="btn btn-success" type="button" onclick="buscarUsuario()">Buscar</button>
+								
 							</div>
 						</div>
 
@@ -164,6 +165,7 @@
 					</div>
 		<span id="totalResultado"></span>
 					<div class="modal-footer">
+					    <button type="button" class="btn btn-info" onclick="listarTodos()">Lista todos</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Fecha</button>
                       
                       </div>
@@ -173,6 +175,48 @@
 		</div>
 
 		<script type="text/javascript">
+		
+		
+		function listarTodos(){
+			
+			var urlAction = document.getElementById('formUser').action;
+			var nomeBusca = document.getElementById('nomeBusca').value;
+			var ativar = 'true';
+			
+			if(ativar = 'true'){
+				$.ajax(
+						{
+
+							method : "get",
+							url : urlAction,
+							data : "nomeBusca=" + nomeBusca
+									+ '&acao=listarDados',
+							success : function(response) {
+								
+									
+								//Converter dados para json
+								var json = JSON.parse(response);
+								
+								console.info(json);
+
+							   $('#tabelaResultados > tbody > tr').remove();
+							   
+							   for(var p = 0; p < json.length; p++){
+								   $('#tabelaResultados > tbody').append('<tr> <td>'+json[p].id+'</td> <td>'+json[p].nome+'</td> <td><button onclick="verEditar('+json[p].id+')" type="button" class="btn btn-info">Ver</button></td> </tr>');
+							   }
+							   document.getElementById('totalResultado').textContent = 'Resultados: ' + json.length;
+							}
+							
+						})
+				.fail(
+						function(xhr, status, errorThrown) {
+							alert('Erro ao listar Usuarios! '
+									+ xhr.responseText);
+						});
+			}
+		}
+			
+		
 		
 		function verEditar(id){
 			
@@ -269,6 +313,7 @@
 				for (p = 0; p < elementos.length; p++) {
 					elementos[p].value = '';
 				}
+				
 				
 
 			}
