@@ -1,28 +1,29 @@
 
-//Criacao da tabela
+CREATE SEQUENCE public.model_login_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
 
-CREATE TABLE public.model_login
+ALTER SEQUENCE public.model_login_id_seq
+    OWNER TO postgres;
+
+CREATE TABLE IF NOT EXISTS public.model_login
 (
-  login character varying(200) NOT NULL,
-  senha character varying(200) NOT NULL,
-  id integer NOT NULL DEFAULT nextval('model_login_id_seq'::regclass),
-  nome character varying(300) NOT NULL,
-  email character varying(300) NOT NULL,
-  CONSTRAINT model_login_pkey PRIMARY KEY (id),
-  CONSTRAINT login_unique UNIQUE (login)
+    login character varying(200) COLLATE pg_catalog."default" NOT NULL,
+    senha character varying(200) COLLATE pg_catalog."default" NOT NULL,
+    id integer NOT NULL DEFAULT nextval('model_login_id_seq'::regclass),
+    nome character varying(300) COLLATE pg_catalog."default" NOT NULL,
+    email character varying(300) COLLATE pg_catalog."default" NOT NULL,
+    usuario_id bigint NOT NULL DEFAULT 1,
+    CONSTRAINT model_login_pkey PRIMARY KEY (id),
+    CONSTRAINT login_unique UNIQUE (login)
 )
 WITH (
-  OIDS=FALSE
-);
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
 ALTER TABLE public.model_login
-  OWNER TO postgres;
-
-  
- //Inserir dados
-  
-  INSERT INTO public."model_login"(
-            login, senha)
-    VALUES ('admin', 'admin');
-
-
-select * from model_login;
+    OWNER to postgres;
