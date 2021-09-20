@@ -17,8 +17,14 @@ CREATE TABLE IF NOT EXISTS public.model_login
     nome character varying(300) COLLATE pg_catalog."default" NOT NULL,
     email character varying(300) COLLATE pg_catalog."default" NOT NULL,
     usuario_id bigint NOT NULL DEFAULT 1,
+    useradmin boolean NOT NULL DEFAULT false,
+    perfil character varying(50) COLLATE pg_catalog."default",
     CONSTRAINT model_login_pkey PRIMARY KEY (id),
-    CONSTRAINT login_unique UNIQUE (login)
+    CONSTRAINT login_unique UNIQUE (login),
+    CONSTRAINT usuario_fk FOREIGN KEY (usuario_id)
+        REFERENCES public.model_login (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 )
 WITH (
     OIDS = FALSE
