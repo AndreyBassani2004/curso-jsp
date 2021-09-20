@@ -66,6 +66,22 @@
 																	value="${modelLogin.nome}"> <span
 																	class="form-bar"></span> <label class="float-label">Nome:</label>
 															</div>
+
+
+															<div class="form-group form-default form-static-label">
+
+																<select class="form-control"
+																	aria-label="Default select example" name="perfil" id="perfil" value="${modelLogin.perfil}" >
+																	<option selected disable="disable">[Selecione Perfil]</option>
+																	<option value="admin">Admin</option>
+																	<option value="secretaria">Secretaria</option>
+																	<option value="auxiliar">Auxiliar</option>
+																</select>
+
+															</div>
+
+
+
 															<div class="form-group form-default form-static-label">
 																<input type="email" name="email" id="email"
 																	class="form-control" required="required"
@@ -105,263 +121,256 @@
 													</div>
 												</div>
 											</div>
-											</div>
-											<span id="msg">${msg}</span>
-											
+										</div>
+										<span id="msg">${msg}</span>
 
-											<div style=" overflow: scroll;">
-												<table class="table" id="tabelaResultadosview">
-													<thead>
-														<tr>
-															<th scope="col">ID</th>
-															<th scope="col">Nome</th>
-															<th scope="col">Ver</th>
 
-														</tr>
-													</thead>
-													<tbody>
-													<c:forEach items='${modelLogins}' var="ml"> 
+										<div style="overflow: scroll;">
+											<table class="table" id="tabelaResultadosview">
+												<thead>
 													<tr>
-													<td><c:out value="${ml.id}"></c:out></td>
-													<td><c:out value="${ml.nome}"></c:out></td>
-													<td><a  class="btn btn-info"
-								 href="<%= request.getContextPath() %>/ServletUsuarioController?acao=buscarEditar&id=${ml.id}">Ver</a></td>
+														<th scope="col">ID</th>
+														<th scope="col">Nome</th>
+														<th scope="col">Ver</th>
+
 													</tr>
+												</thead>
+												<tbody>
+													<c:forEach items='${modelLogins}' var="ml">
+														<tr>
+															<td><c:out value="${ml.id}"></c:out></td>
+															<td><c:out value="${ml.nome}"></c:out></td>
+															<td><a class="btn btn-info"
+																href="<%= request.getContextPath() %>/ServletUsuarioController?acao=buscarEditar&id=${ml.id}">Ver</a></td>
+														</tr>
 													</c:forEach>
 
-													</tbody>
-												</table>
+												</tbody>
+											</table>
 
-											</div>
 										</div>
-
-										<!-- Page-body end -->
 									</div>
-									<div id="styleSelector"></div>
+
+									<!-- Page-body end -->
 								</div>
+								<div id="styleSelector"></div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
 
-		<!-- Required Jquery -->
-		<jsp:include page="javaScriptFile.jsp"></jsp:include>
+	<!-- Required Jquery -->
+	<jsp:include page="javaScriptFile.jsp"></jsp:include>
 
-		<!-- Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Pesquisa de
-							usuario</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Pesquisa de
+						usuario</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+					<div class="input-group mb-3">
+						<input type="text" class="form-control" placeholder="Nome"
+							aria-label="nome" id="nomeBusca" aria-describedby="basic-addon2">
+						<div class="input-group-append">
+							<button class="btn btn-success" type="button"
+								onclick="buscarUsuario()">Buscar</button>
+
+						</div>
 					</div>
-					<div class="modal-body">
 
-						<div class="input-group mb-3">
-							<input type="text" class="form-control" placeholder="Nome"
-								aria-label="nome" id="nomeBusca" aria-describedby="basic-addon2">
-							<div class="input-group-append">
-								<button class="btn btn-success" type="button"
-									onclick="buscarUsuario()">Buscar</button>
+					<div style="height: 300px; overflow: scroll;">
+						<table class="table" id="tabelaResultados">
+							<thead>
+								<tr>
+									<th scope="col">ID</th>
+									<th scope="col">Nome</th>
+									<th scope="col">Ver</th>
 
-							</div>
-						</div>
+								</tr>
+							</thead>
+							<tbody>
 
-						<div style="height: 300px; overflow: scroll;">
-							<table class="table" id="tabelaResultados">
-								<thead>
-									<tr>
-										<th scope="col">ID</th>
-										<th scope="col">Nome</th>
-										<th scope="col">Ver</th>
+							</tbody>
+						</table>
 
-									</tr>
-								</thead>
-								<tbody>
+					</div>
+					<span id="totalResultado"></span>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-info" onclick="listarTodos()">Lista
+							todos</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Fecha</button>
 
-								</tbody>
-							</table>
-
-						</div>
-						<span id="totalResultado"></span>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-info"
-								onclick="listarTodos()">Lista todos</button>
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Fecha</button>
-
-						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<script type="text/javascript">
-			function listarTodos() {
+	<script type="text/javascript">
+		function listarTodos() {
+
+			var urlAction = document.getElementById('formUser').action;
+			var ativar = true;
+
+			if (ativar == true) {
+				$
+						.ajax(
+								{
+
+									method : "get",
+									url : urlAction,
+									data : '&acao=listarDados',
+									success : function(response) {
+
+										//Converter dados para json
+										var json = JSON.parse(response);
+
+										console.info(json);
+
+										$('#tabelaResultados > tbody > tr')
+												.remove();
+
+										for (var p = 0; p < json.length; p++) {
+											$('#tabelaResultados > tbody')
+													.append(
+															'<tr> <td>'
+																	+ json[p].id
+																	+ '</td> <td>'
+																	+ json[p].nome
+																	+ '</td> <td><button onclick="verEditar('
+																	+ json[p].id
+																	+ ')" type="button" class="btn btn-info">Ver</button></td> </tr>');
+										}
+										document
+												.getElementById('totalResultado').textContent = 'Resultados: '
+												+ json.length;
+									}
+
+								}).fail(
+								function(xhr, status, errorThrown) {
+									alert('Erro ao listar Usuarios! '
+											+ xhr.responseText);
+								});
+			}
+		}
+
+		function verEditar(id) {
+
+			var urlAction = document.getElementById('formUser').action;
+
+			window.location.href = urlAction + '?acao=buscarEditar&id=' + id;
+
+		}
+
+		function buscarUsuario() {
+
+			var urlAction = document.getElementById('formUser').action;
+			var nomeBusca = document.getElementById('nomeBusca').value;
+
+			if (nomeBusca != null && nomeBusca != '' && nomeBusca.trim() != '') {
+				$
+						.ajax(
+								{
+
+									method : "get",
+									url : urlAction,
+									data : "nomeBusca=" + nomeBusca
+											+ '&acao=buscarUserAjax',
+									success : function(response) {
+
+										//Converter dados para json
+										var json = JSON.parse(response);
+
+										console.info(json);
+
+										$('#tabelaResultados > tbody > tr')
+												.remove();
+
+										for (var p = 0; p < json.length; p++) {
+											$('#tabelaResultados > tbody')
+													.append(
+															'<tr> <td>'
+																	+ json[p].id
+																	+ '</td> <td>'
+																	+ json[p].nome
+																	+ '</td> <td><button onclick="verEditar('
+																	+ json[p].id
+																	+ ')" type="button" class="btn btn-info">Ver</button></td> </tr>');
+										}
+										document
+												.getElementById('totalResultado').textContent = 'Resultados: '
+												+ json.length;
+									}
+
+								}).fail(
+								function(xhr, status, errorThrown) {
+									alert('Erro ao buscar usuario com nome! '
+											+ xhr.responseText);
+								});
+			}
+		}
+
+		function criarDeleteComAjax() {
+
+			if (confirm('Deseja realmente excluir dados?')) {
 
 				var urlAction = document.getElementById('formUser').action;
-				var ativar = true;
+				var idUser = document.getElementById('id').value;
 
-				if (ativar == true) {
-					$
-							.ajax(
-									{
+				$.ajax({
 
-										method : "get",
-										url : urlAction,
-										data : '&acao=listarDados',
-										success : function(response) {
+					method : "get",
+					url : urlAction,
+					data : "id=" + idUser + '&acao=deletarajax',
+					success : function(response) {
 
-											//Converter dados para json
-											var json = JSON.parse(response);
+						limparForm();
+						document.getElementById('msg').textContent = response;
+					}
 
-											console.info(json);
-
-											$('#tabelaResultados > tbody > tr')
-													.remove();
-
-											for (var p = 0; p < json.length; p++) {
-												$('#tabelaResultados > tbody')
-														.append(
-																'<tr> <td>'
-																		+ json[p].id
-																		+ '</td> <td>'
-																		+ json[p].nome
-																		+ '</td> <td><button onclick="verEditar('
-																		+ json[p].id
-																		+ ')" type="button" class="btn btn-info">Ver</button></td> </tr>');
-											}
-											document
-													.getElementById('totalResultado').textContent = 'Resultados: '
-													+ json.length;
-										}
-
-									}).fail(
-									function(xhr, status, errorThrown) {
-										alert('Erro ao listar Usuarios! '
-												+ xhr.responseText);
-									});
-				}
-			}
-
-			function verEditar(id) {
-
-				var urlAction = document.getElementById('formUser').action;
-
-				window.location.href = urlAction + '?acao=buscarEditar&id='
-						+ id;
+				}).fail(
+						function(xhr, status, errorThrown) {
+							alert('Erro ao deletar usuario por id: '
+									+ xhr.responseText);
+						});
 
 			}
 
-			function buscarUsuario() {
+		}
 
-				var urlAction = document.getElementById('formUser').action;
-				var nomeBusca = document.getElementById('nomeBusca').value;
+		function criarDelete() {
 
-				if (nomeBusca != null && nomeBusca != ''
-						&& nomeBusca.trim() != '') {
-					$
-							.ajax(
-									{
-
-										method : "get",
-										url : urlAction,
-										data : "nomeBusca=" + nomeBusca
-												+ '&acao=buscarUserAjax',
-										success : function(response) {
-
-											//Converter dados para json
-											var json = JSON.parse(response);
-
-											console.info(json);
-
-											$('#tabelaResultados > tbody > tr')
-													.remove();
-
-											for (var p = 0; p < json.length; p++) {
-												$('#tabelaResultados > tbody')
-														.append(
-																'<tr> <td>'
-																		+ json[p].id
-																		+ '</td> <td>'
-																		+ json[p].nome
-																		+ '</td> <td><button onclick="verEditar('
-																		+ json[p].id
-																		+ ')" type="button" class="btn btn-info">Ver</button></td> </tr>');
-											}
-											document
-													.getElementById('totalResultado').textContent = 'Resultados: '
-													+ json.length;
-										}
-
-									})
-							.fail(
-									function(xhr, status, errorThrown) {
-										alert('Erro ao buscar usuario com nome! '
-												+ xhr.responseText);
-									});
-				}
+			if (confirm('Deseja realmente excluir dados?')) {
+				document.getElementById("formUser").method = 'get';
+				document.getElementById("acao").value = 'deletar';
+				document.getElementById("formUser").submit();
 			}
 
-			function criarDeleteComAjax() {
+		}
 
-				if (confirm('Deseja realmente excluir dados?')) {
+		function limparForm() {
 
-					var urlAction = document.getElementById('formUser').action;
-					var idUser = document.getElementById('id').value;
+			var elementos = document.getElementById("formUser").elements; /*Retorna os elementos html dentro do form*/
 
-					$
-							.ajax(
-									{
-
-										method : "get",
-										url : urlAction,
-										data : "id=" + idUser
-												+ '&acao=deletarajax',
-										success : function(response) {
-
-											limparForm();
-											document.getElementById('msg').textContent = response;
-										}
-
-									})
-							.fail(
-									function(xhr, status, errorThrown) {
-										alert('Erro ao deletar usuario por id: '
-												+ xhr.responseText);
-									});
-
-				}
-
+			for (p = 0; p < elementos.length; p++) {
+				elementos[p].value = '';
 			}
 
-			function criarDelete() {
-
-				if (confirm('Deseja realmente excluir dados?')) {
-					document.getElementById("formUser").method = 'get';
-					document.getElementById("acao").value = 'deletar';
-					document.getElementById("formUser").submit();
-				}
-
-			}
-
-			function limparForm() {
-
-				var elementos = document.getElementById("formUser").elements; /*Retorna os elementos html dentro do form*/
-
-				for (p = 0; p < elementos.length; p++) {
-					elementos[p].value = '';
-				}
-
-			}
-		</script>
+		}
+	</script>
 </body>
 
 </html>
