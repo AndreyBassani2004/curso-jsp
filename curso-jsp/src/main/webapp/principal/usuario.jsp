@@ -50,10 +50,12 @@
 													<div class="card-block">
 														<h4 class="sub-title">Cad. Usuario</h4>
 
-														<form class="form-material"
+														<form class="form-material" enctype="multipart/form-data"
 															action="<%=request.getContextPath()%>/ServletUsuarioController"
 															method="post" id="formUser">
 															<input type="hidden" name="acao" id="acao" value="">
+															
+															
 
 															<div class="form-group form-default form-static-label">
 																<input type="text" name="id" id="id"
@@ -61,6 +63,16 @@
 																	value="${modelLogin.id}"> <span
 																	class="form-bar"></span> <label class="float-label">ID:</label>
 															</div>
+															
+															<div class="form-group form-default input-group mb-4">
+															<div class="input-group-prepend">
+															<img alt="Imagen User" src="" width="70px">
+															</div>
+															<input type="file"  class="form-control-file" >
+															
+															</div>
+															
+															
 															<div class="form-group form-default form-static-label">
 																<input type="text" name="nome" id="nome"
 																	class="form-control" required="required"
