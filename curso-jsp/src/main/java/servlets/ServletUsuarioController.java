@@ -9,7 +9,12 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
+import org.apache.tomcat.util.codec.binary.Base64;
+
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.IOUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -137,6 +142,19 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			modelLogin.setSenha(senha);
 			modelLogin.setPerfil(perfil);
 			modelLogin.setSexo(sexo);
+			
+			
+			if (ServletFileUpload.isMultipartContent(request)) {
+				
+				Part part = request.getPart("fileFoto"); /*Pega foto da tela*/
+				byte[] foto = IOUtils.toByteArray(part.getInputStream());/*Converte imagem para byte*/
+				String imagemBase64 = new Base64().encodeBase64String(foto);
+					
+				System.out.println(imagemBase64);
+					
+				
+				
+			}
 
 			if (daoUsuarioRepository.validarLogin(modelLogin.getLogin()) && modelLogin.getId() == null) {
 				msg = "Já existe usuario com o mesmo login, informe outro login.";

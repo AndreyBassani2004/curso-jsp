@@ -66,9 +66,9 @@
 															
 															<div class="form-group form-default input-group mb-4">
 															<div class="input-group-prepend">
-															<img alt="Imagen User" src="" width="70px">
+															<img alt="Imagen User" id="fotoembase64" src="" width="70px">
 															</div>
-															<input type="file"  class="form-control-file" >
+															<input type="file" id="fileFoto" name="fileFoto" accept="image/*" onchange="visualizarImg('fotoembase64', 'fileFoto');" class="form-control-file" style="margin-top: 15px; margin-left: 5px;">
 															
 															</div>
 															
@@ -288,6 +288,28 @@
 	</div>
 
 	<script type="text/javascript">
+	
+	function visualizarImg(fotoembase64, filefoto) {
+		
+		
+		var preview = document.getElementById(fotoembase64);
+		var fileUser = document.getElementById(filefoto).files[0];
+		var reader = new FileReader();
+		
+		reader.onloadend = function (){
+			preview.src = reader.result /*Carregar foto na tela*/
+		}
+		
+		if(fileUser){
+			reader.readAsDataURL(fileUser);
+		}else{
+			preview.src= '';
+		}
+		
+	}
+	
+	
+	
 		function listarTodos() {
 
 			var urlAction = document.getElementById('formUser').action;
