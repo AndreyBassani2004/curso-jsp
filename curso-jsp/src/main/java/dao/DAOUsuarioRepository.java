@@ -184,6 +184,7 @@ public class DAOUsuarioRepository {
 			modelLogin.setUseradmin(resultado.getBoolean("useradmin"));
 			modelLogin.setPerfil(resultado.getString("perfil"));
 			modelLogin.setSexo(resultado.getString("sexo"));
+			modelLogin.setFotouser(resultado.getString("fotouser"));
 
 		}
 
@@ -209,6 +210,9 @@ public class DAOUsuarioRepository {
 			modelLogin.setNome(resultado.getString("nome"));
 			modelLogin.setPerfil(resultado.getString("perfil"));
 			modelLogin.setSexo(resultado.getString("sexo"));
+			modelLogin.setFotouser(resultado.getString("fotouser"));
+
+
 
 			
 		}
@@ -236,6 +240,10 @@ public class DAOUsuarioRepository {
 			modelLogin.setUseradmin(resultado.getBoolean("useradmin"));
 			modelLogin.setPerfil(resultado.getString("perfil"));
 			modelLogin.setSexo(resultado.getString("sexo"));
+			modelLogin.setFotouser(resultado.getString("fotouser"));
+
+
+			
 
 		}
 
@@ -263,6 +271,9 @@ public class DAOUsuarioRepository {
 			modelLogin.setNome(resultado.getString("nome"));
 			modelLogin.setPerfil(resultado.getString("perfil"));
 			modelLogin.setSexo(resultado.getString("sexo"));
+			modelLogin.setFotouser(resultado.getString("fotouser"));
+			modelLogin.setExtencaofotouser(resultado.getString("extensaofotouser"));
+
 
 		}
 
