@@ -66,17 +66,19 @@
 															<div class="input-group-prepend">
 															
 															<c:if test="${modelLogin.fotouser != '' && modelLogin.fotouser != null}">
+															<a href="<%= request.getContextPath() %>/ServletUsuarioController?acao=dowloadFoto&id=${modelLogin.id}">
 															<img alt="Imagen User" id="fotoembase64" src="${modelLogin.fotouser}" width="70px">
+															</a>
 															</c:if>
 															<c:if test="${modelLogin.fotouser == '' || modelLogin.fotouser == null}">
 															<img alt="Imagen User" id="fotoembase64" src="assets/images/avatar-1.jpg" width="70px">
 															</c:if>
 															
-															
-															
-															<!--  <img alt="Imagen User" id="fotoembase64" src="${modelLogin.fotouser}" width="70px"> -->
+														
 															</div>
-															<input type="file" id="fileFoto" name="fileFoto" accept="image/*" onchange="visualizarImg('fotoembase64', 'fileFoto');" class="form-control-file" style="margin-top: 15px; margin-left: 5px;">
+															<input type="file" id="fileFoto" name="fileFoto" accept="image/*" 
+															onchange="visualizarImg('fotoembase64', 'fileFoto');" class="form-control-file" 
+															style="margin-top: 15px; margin-left: 5px;">
 															
 															</div>
 															
