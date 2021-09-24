@@ -10,7 +10,18 @@
                       <div class="pcoded-inner-navbar main-menu">
                           <div class="">
                               <div class="main-menu-header">
-                                  <img class="img-80 img-radius" src="<%= request.getContextPath() %>/assets/images/avatar-4.jpg" alt="User-Profile-Image">
+                              
+                              
+                              <c:if test="${imagemUser != '' && imagemUser != null}">
+                                  <img class="img-80 img-radius" src="${imagemUser}" alt="User-Profile-Image">
+                                  </c:if>
+                                  
+                                  <c:if test="${imagemUser == '' || imagemUser == null}">
+                                  <img class="img-80 img-radius" src="<%= request.getContextPath() %>/assets/images/avatar-1.jpg" alt="User-Profile-Image">
+                                  </c:if>
+                                  
+                                  
+                                  
                                   <div class="user-details">
                                       <span id="more-details"><%= session.getAttribute("usuario") %><i class="fa fa-caret-down"></i></span>
                                   </div>
@@ -27,27 +38,31 @@
                               </div>
                           </div>
                           <div class="p-15 p-b-0">
+                          
                               <form class="form-material">
+                              <!--  
                                   <div class="form-group form-primary">
                                       <input type="text" name="footer-email" class="form-control" required="">
                                       <span class="form-bar"></span>
                                       <label class="float-label"><i class="fa fa-search m-r-10"></i>Search Friend</label>
                                   </div>
+                                  -->
                               </form>
                           </div>
-                          <div class="pcoded-navigation-label" data-i18n="nav.category.navigation">Layout</div>
+                          <div class="pcoded-navigation-label" data-i18n="nav.category.navigation">Menu</div>
                           <ul class="pcoded-item pcoded-left-item">
                               <li class="active">
-                                  <a href="index.html" class="waves-effect waves-dark">
+                                  <a href="#" class="waves-effect waves-dark">
                                       <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
-                                      <span class="pcoded-mtext" data-i18n="nav.dash.main">Dashboard</span>
+                                      <span class="pcoded-mtext" data-i18n="nav.dash.main">Inicio</span>
                                       <span class="pcoded-mcaret"></span>
                                   </a>
                               </li>
+                          
                               <li class="pcoded-hasmenu">
                                   <a href="javascript:void(0)" class="waves-effect waves-dark">
                                       <span class="pcoded-micon"><i class="ti-layout-grid2-alt"></i></span>
-                                      <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Components</span>
+                                      <span class="pcoded-mtext"  data-i18n="nav.basic-components.main">Cadastro</span>
                                       <span class="pcoded-mcaret"></span>
                                   </a>
                                   <ul class="pcoded-submenu">
@@ -60,6 +75,7 @@
                                           </a>
                                       </li>
                                       </c:if>
+                                      <!--  
                                       <li class=" ">
                                           <a href="breadcrumb.html" class="waves-effect waves-dark">
                                               <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
@@ -123,10 +139,13 @@
                                               <span class="pcoded-mcaret"></span>
                                           </a>
                                       </li>
+                                      -->
                 
                                   </ul>
                               </li>
                           </ul>
+                          
+                          <!--  
                           <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Forms &amp; Tables</div>
                           <ul class="pcoded-item pcoded-left-item">
                               <li>
@@ -146,16 +165,18 @@
         
                           </ul>
         
-                          <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Chart &amp; Maps</div>
+        -->
+                          <div class="pcoded-navigation-label" data-i18n="nav.category.forms">Relatorios:</div>
                           <ul class="pcoded-item pcoded-left-item">
                               <li>
                                   <a href="chart.html" class="waves-effect waves-dark">
                                       <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
-                                      <span class="pcoded-mtext" data-i18n="nav.form-components.main">Chart</span>
+                                      <span class="pcoded-mtext" data-i18n="nav.form-components.main">Cadastro</span>
                                       <span class="pcoded-mcaret"></span>
                                   </a>
                               </li>
                               <li>
+                              <!--  
                                   <a href="map-google.html" class="waves-effect waves-dark">
                                       <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
                                       <span class="pcoded-mtext" data-i18n="nav.form-components.main">Maps</span>
@@ -192,9 +213,11 @@
                                       </li>
                                   </ul>
                               </li>
-        
+        -->
                           </ul>
         
+        
+        <!--  
                           <div class="pcoded-navigation-label" data-i18n="nav.category.other">Other</div>
                           <ul class="pcoded-item pcoded-left-item">
                               <li class="pcoded-hasmenu ">
@@ -239,6 +262,6 @@
                               </li>
                           </ul>
                       </div>
-                      
+              -->        
                       
                   </nav>
