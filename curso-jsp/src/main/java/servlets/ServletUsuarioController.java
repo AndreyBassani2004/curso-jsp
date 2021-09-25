@@ -14,6 +14,7 @@ import javax.servlet.http.Part;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.apache.catalina.connector.Response;
 import org.apache.commons.io.IOUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -70,8 +71,25 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			 ObjectMapper mapper = new ObjectMapper();
 			 String json = mapper.writeValueAsString(dadosJsonUser);
 			 
+			 response.addHeader("totalPagina", "" + daoUsuarioRepository.consultaUsuarioListTotalPaginaPaginacao(nomeBusca, super.getUserLogado(request)));
 			 response.getWriter().write(json);
 			
+			 
+		} else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarUserAjaxPage")) {
+			 String nomeBusca = request.getParameter("nomeBusca");
+			 String pagina = request.getParameter("pagina");
+			 
+			 List<ModelLogin> dadosJsonUser = daoUsuarioRepository.consultaUsuarioList(super.getUserLogado(request));
+			 
+			 ObjectMapper mapper = new ObjectMapper();
+			 String json = mapper.writeValueAsString(dadosJsonUser);
+			 
+			 response.addHeader("totalPagina", "" + daoUsuarioRepository.consultaUsuarioListTotalPaginaPaginacao(nomeBusca, super.getUserLogado(request)));
+			 response.getWriter().write(json);
+			
+		 
+			 
+			 
 		}else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarEditar")) {
 			String id = request.getParameter("id");
 			
