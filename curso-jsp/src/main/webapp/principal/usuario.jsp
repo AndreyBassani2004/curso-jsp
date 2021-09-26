@@ -466,6 +466,7 @@
 		
 		function buscarUserPagAjax(url) {
 			var urlAction = document.getElementById('formUser').action;
+			var nomeBusca = document.getElementById('nomeBusca').value;
 			
 			$
 			.ajax(
@@ -501,12 +502,13 @@
 									.getElementById('totalResultado').textContent = 'Resultados: '
 									+ json.length;
 							
+							
 							  var totalPagina = xhr.getResponseHeader("totalPagina");
 							
 							 
 							  for (var p = 0; p < totalPagina; p++){
-								  var url = "?nomeBusca=" + nomeBusca + "&acao=buscaUserAjaxPage&pagina=" + (p * 5);
-								  $('#ulPaginacaoUserAjax').append('<li class="page-item"><a class="page-link" href="#" onclick="buscarUserPagAjax("'+ url +'")">'+(p + 1)+'</a></li>');
+								  var url = 'nomeBusca=' + nomeBusca + '&acao=buscaUserAjaxPage&pagina=' + (p * 5);
+								  $('#ulPaginacaoUserAjax').append('<li class="page-item"><a class="page-link" href="#" onclick="buscarUserPagAjax(\''+ url +'\')">'+(p + 1)+'</a></li>');
 								
 								 
 								  
@@ -571,8 +573,8 @@
 										 
 										  for (var p = 0; p < totalPagina; p++){
 											  
-											  var url = urlAction + "?nomeBusca=" + nomeBusca + "&acao=buscaUserAjaxPage&pagina=" + (p * 5);
-											  $('#ulPaginacaoUserAjax').append('<li class="page-item"><a class="page-link" href="#" onclick="buscarUserPagAjax("'+ url +'")">'+(p + 1)+'</a></li>');
+											  var url = 'nomeBusca=' + nomeBusca + '&acao=buscaUserAjaxPage&pagina=' + (p * 5);
+											  $('#ulPaginacaoUserAjax').append('<li class="page-item"><a class="page-link" href="#" onclick="buscarUserPagAjax(\''+ url +'\')">'+(p + 1)+'</a></li>');
 											
 											 
 											  
