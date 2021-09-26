@@ -1,35 +1,44 @@
-
+-- Criar Sequencia
+CREATE SEQUENCE model_login_id_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+	
+	
+-- Criar Tabela
 CREATE TABLE IF NOT EXISTS public.model_login
 (
-    login character varying(200) COLLATE pg_catalog."default" NOT NULL,
-    senha character varying(200) COLLATE pg_catalog."default" NOT NULL,
+    login character varying(200) NOT NULL,
+    senha character varying(200) NOT NULL,
     id integer NOT NULL DEFAULT nextval('model_login_id_seq'::regclass),
-    nome character varying(300) COLLATE pg_catalog."default" NOT NULL,
-    email character varying(300) COLLATE pg_catalog."default" NOT NULL,
-    usuario_id bigint NOT NULL DEFAULT 1,
-    useradmin boolean NOT NULL DEFAULT false,
-    perfil character varying(50) COLLATE pg_catalog."default",
-    sexo character varying(50) COLLATE pg_catalog."default",
-    fotouser text COLLATE pg_catalog."default",
-    extensaofotouser character varying(200) COLLATE pg_catalog."default",
-    cep character varying(250) COLLATE pg_catalog."default",
-    logradouro character varying(250) COLLATE pg_catalog."default",
-    rua character varying(250) COLLATE pg_catalog."default",
-    bairro character varying(250) COLLATE pg_catalog."default",
-    localidade character varying(250) COLLATE pg_catalog."default",
-    uf character varying(250) COLLATE pg_catalog."default",
-    numero character varying(250) COLLATE pg_catalog."default",
-    CONSTRAINT model_login_pkey PRIMARY KEY (id),
-    CONSTRAINT login_unique UNIQUE (login),
-    CONSTRAINT usuario_fk FOREIGN KEY (usuario_id)
-        REFERENCES public.model_login (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
+    nome character varying(300) NOT NULL,
+    email character varying(300),
+	CONSTRAINT login_unique UNIQUE (login),
+    PRIMARY KEY (id));
+  
+  
+-- Se usuario admin ou nao
+Alter table model_login add column useradmin boolean NOT NULL DEFAULT false;
 
-ALTER TABLE public.model_login
-    OWNER to postgres;
+-- Qual adm criou usuario
+Alter table model_login add column usuario_id bigint NOT NULL DEFAULT 1;
+Alter table model_login add CONSTRAINT usuario_fk FOREIGN KEY (usuario_id) REFERENCES model_login (id);
+
+-- Qual classe perfil
+Alter table model_login add column perfil character varying(50); 
+
+-- Armazenar foto
+Alter table model_login add column fotouser text;
+Alter table model_login add column extensaofotouser character varying(200);
+
+--Armazenar enderco
+Alter table model_login add column sexo character varying(50);
+Alter table model_login add column cep character varying(250);
+Alter table model_login add column logradouro character varying(250);
+Alter table model_login add column rua character varying(250);
+Alter table model_login add column bairro character varying(250);
+Alter table model_login add column localidade character varying(250);
+Alter table model_login add column uf character varying(250);
+Alter table model_login add column numero character varying(250);
