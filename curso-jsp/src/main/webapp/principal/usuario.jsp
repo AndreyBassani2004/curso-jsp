@@ -387,16 +387,25 @@
 
 	<script type="text/javascript">
 	
-	
-	
 	$(function(){
-	   $("#rendamensal").maskMoney({
-	      prefix: 'R$ ',
-	      allowNegative: true,
-	      thousands: '.',
-	      decimal: ','
-	   });
-	});
+		   $("#rendamensal").maskMoney({
+		      prefix: 'R$ ',
+		      allowNegative: true,
+		      thousands: '.',
+		      decimal: ','
+		   });
+		});
+	
+	$("#rendamensal").focus();
+
+
+	var dataNascimento = $("#dataNascimento").val();
+
+	var dateFormat = new Date(dataNascimento);
+
+	$("#dataNascimento").val(dateFormat.toLocaleDateString('pt-BR',{timeZone: 'UTC'}));
+
+	$("#nome").focus();
 	
 	
 	
