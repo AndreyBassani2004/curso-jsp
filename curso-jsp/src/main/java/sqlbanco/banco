@@ -69,3 +69,5 @@ constraint usuario_cad_fk foreign key (usuario_cad_id) REFERENCES model_login(id
 
 alter table model_login add column datanascimento date;
 
+--
+alter table model_login add column rendamensal NUMERIC;

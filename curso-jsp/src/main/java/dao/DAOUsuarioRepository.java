@@ -21,7 +21,7 @@ public class DAOUsuarioRepository {
 
 		if (objeto.isNovo()) {
 
-			String sql = "INSERT INTO model_login(login, senha, nome, email, usuario_id, perfil, sexo, cep, logradouro, bairro, localidade, uf, numero, datanascimento) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO model_login(login, senha, nome, email, usuario_id, perfil, sexo, cep, logradouro, bairro, localidade, uf, numero, datanascimento, rendamensal) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement preparedSql = connection.prepareStatement(sql);
 
 			preparedSql.setString(1, objeto.getLogin());
@@ -39,6 +39,7 @@ public class DAOUsuarioRepository {
 			preparedSql.setString(12, objeto.getUf());
 			preparedSql.setString(13, objeto.getNumero());
 			preparedSql.setDate(14, objeto.getDataNascimento());
+			preparedSql.setDouble(15, objeto.getRendamensal());
 			
 			preparedSql.execute();
 			connection.commit();
@@ -56,16 +57,16 @@ public class DAOUsuarioRepository {
 			}
 
 		} else {
-			String sql = "UPDATE model_login SET login=?, senha=?, nome=?, email=?, perfil=?, sexo=?, cep=?, logradouro=?, bairro=?, localidade=?, uf=?, numero=?, datanascimento=? WHERE id= " + objeto.getId() + ";";
+String sql = "UPDATE model_login SET login=?, senha=?, nome=?, email=?, perfil=?, sexo=?, cep=?, logradouro=?, bairro =?, localidade=?, uf=?, numero =?, datanascimento =?, rendamensal =? WHERE id =  "+objeto.getId()+";";
+			
 			PreparedStatement prepareSql = connection.prepareStatement(sql);
-
+			
 			prepareSql.setString(1, objeto.getLogin());
 			prepareSql.setString(2, objeto.getSenha());
 			prepareSql.setString(3, objeto.getNome());
 			prepareSql.setString(4, objeto.getEmail());
 			prepareSql.setString(5, objeto.getPerfil());
 			prepareSql.setString(6, objeto.getSexo());
-
 			
 			prepareSql.setString(7, objeto.getCep());
 			prepareSql.setString(8, objeto.getLogradouro());
@@ -74,9 +75,10 @@ public class DAOUsuarioRepository {
 			prepareSql.setString(11, objeto.getUf());
 			prepareSql.setString(12, objeto.getNumero());
 			prepareSql.setDate(13, objeto.getDataNascimento());
-
+			prepareSql.setDouble(14, objeto.getRendamensal());
+			
 			prepareSql.executeUpdate();
-
+			
 			connection.commit();
 			
 			
@@ -340,6 +342,10 @@ String sql = "select count(1) as total from model_login  where usuario_id = " + 
 			modelLogin.setLocalidade(resultado.getString("localidade"));;
 			modelLogin.setUf(resultado.getString("uf"));
 			modelLogin.setNumero(resultado.getString("numero"));
+			
+			modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
+			modelLogin.setRendamensal(resultado.getDouble("rendamensal"));
+			
 
 		}
 
@@ -373,6 +379,10 @@ String sql = "select count(1) as total from model_login  where usuario_id = " + 
 			modelLogin.setLocalidade(resultado.getString("localidade"));;
 			modelLogin.setUf(resultado.getString("uf"));
 			modelLogin.setNumero(resultado.getString("numero"));
+			
+			modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
+			modelLogin.setRendamensal(resultado.getDouble("rendamensal"));
+			
 
 			
 		}
@@ -410,6 +420,10 @@ String sql = "select count(1) as total from model_login  where usuario_id = " + 
 			modelLogin.setUf(resultado.getString("uf"));
 			modelLogin.setNumero(resultado.getString("numero"));
 
+			modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
+			modelLogin.setRendamensal(resultado.getDouble("rendamensal"));
+			
+			
 
 			
 
@@ -450,6 +464,10 @@ String sql = "select count(1) as total from model_login  where usuario_id = " + 
 			modelLogin.setLocalidade(resultado.getString("localidade"));;
 			modelLogin.setUf(resultado.getString("uf"));
 			modelLogin.setNumero(resultado.getString("numero"));
+			
+			modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
+			modelLogin.setRendamensal(resultado.getDouble("rendamensal"));
+			
 
 		}
 
@@ -489,7 +507,9 @@ String sql = "select count(1) as total from model_login  where usuario_id = " + 
 			modelLogin.setLocalidade(resultado.getString("localidade"));;
 			modelLogin.setUf(resultado.getString("uf"));
 			modelLogin.setNumero(resultado.getString("numero"));
-
+			modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
+			modelLogin.setRendamensal(resultado.getDouble("rendamensal"));
+			
 		}
 
 		return modelLogin;

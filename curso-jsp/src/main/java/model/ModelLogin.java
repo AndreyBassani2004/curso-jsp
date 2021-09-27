@@ -30,13 +30,20 @@ public class ModelLogin implements Serializable {
 	//Data nascimento
 	private Date dataNascimento;
 	
+	//Renda mensal
+	private Double rendamensal;
 	
+		
 	
-	
-	
-	
-	
-	
+	//Set and get, etc... 
+	public Double getRendamensal() {
+		return rendamensal;
+	}
+
+	public void setRendamensal(Double rendamensal) {
+		this.rendamensal = rendamensal;
+	}
+
 	public Date getDataNascimento() {
 		return dataNascimento;
 	}
