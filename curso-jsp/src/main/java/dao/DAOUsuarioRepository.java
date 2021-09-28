@@ -163,9 +163,6 @@ String sql = "UPDATE model_login SET login=?, senha=?, nome=?, email=?, perfil=?
 	}
 	
 	
-	
-	
-	
 	public List<ModelLogin> consultaUsuarioList(String nome, Long userLogado) throws Exception {
 
 		List<ModelLogin> retorno = new ArrayList<ModelLogin>();
@@ -235,6 +232,39 @@ String sql = "select count(1) as total from model_login  where usuario_id = " + 
 		// ModelLogin modelLogin = new ModelLogin();
 
 		String sql = "select * from model_login where useradmin is false and usuario_id = " + userLogado + " order by nome offset "+ offset +" limit 5 ";
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+	
+
+		ResultSet resultado = statement.executeQuery();
+
+		while (resultado.next()) { // Percorrer linhas de resultado no SQL
+			ModelLogin modelLogin = new ModelLogin();
+
+			modelLogin.setEmail(resultado.getString("email"));
+			modelLogin.setId(resultado.getLong("id"));
+			modelLogin.setLogin(resultado.getString("login"));
+			modelLogin.setNome(resultado.getString("nome"));
+			// modelLogin.setSenha(resultado.getString("senha"));
+			modelLogin.setPerfil(resultado.getString("perfil"));
+			modelLogin.setSexo(resultado.getString("sexo"));
+
+			retorno.add(modelLogin);
+		}
+
+		return retorno;
+	}
+	
+	
+	
+	
+	public List<ModelLogin> consultaUsuarioListRel(Long userLogado) throws Exception {
+
+		List<ModelLogin> retorno = new ArrayList<ModelLogin>();
+
+		// ModelLogin modelLogin = new ModelLogin();
+
+		String sql = "select * from model_login where useradmin is false and usuario_id = " + userLogado + ";";
 		
 		PreparedStatement statement = connection.prepareStatement(sql);
 	
