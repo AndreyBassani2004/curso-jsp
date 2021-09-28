@@ -162,6 +162,11 @@ public class ServletUsuarioController extends ServletGenericUtil {
 				
 				request.setAttribute("listUser",daoUsuarioRepository.consultaUsuarioListRel(super.getUserLogado(request)));
 				
+			}else {
+				
+				
+				request.setAttribute("listUser",daoUsuarioRepository.consultaUsuarioListRel(super.getUserLogado(request), dataInicial, dataFinal));
+				
 			}
 			
 			
