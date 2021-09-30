@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dao.DAOUsuarioRepository;
 import model.ModelLogin;
+import util.ReportUtil;
 
 @MultipartConfig
 @WebServlet(urlPatterns = {"/ServletUsuarioController"})
@@ -162,6 +163,9 @@ public class ServletUsuarioController extends ServletGenericUtil {
 				
 				request.setAttribute("listUser",daoUsuarioRepository.consultaUsuarioListRel(super.getUserLogado(request)));
 				
+				
+				
+				
 			}else {
 				
 				
@@ -173,6 +177,30 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			request.setAttribute("dataInicial", dataInicial);
 			request.setAttribute("dataFinal", dataFinal);
 			request.getRequestDispatcher("principal/reluser.jsp").forward(request, response);
+		
+		
+		}else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("imprimirRelatorioPDF")) {
+		
+			String dataInicial = request.getParameter("dataInicial");
+			String dataFinal = request.getParameter("dataFinal");
+			
+			List<ModelLogin> modelLogins = null;
+			
+			if(dataInicial == null || dataInicial.isEmpty() && dataFinal == null || dataFinal.isEmpty() ) {
+				
+				modelLogins = daoUsuarioRepository.consultaUsuarioListRel(super.getUserLogado(request));
+															
+			}else {
+			
+				modelLogins = daoUsuarioRepository.consultaUsuarioListRel(super.getUserLogado(request), dataInicial, dataFinal);
+				
+			}
+			
+			byte[] relatorio = new ReportUtil().geraRelatorioPDF(modelLogins, "resl-user-jsp", request.getServletContext());
+			
+			response.setHeader("content-Disposition", "attachment;filename=arquivo.pdf");
+			response.getOutputStream().write(relatorio);
+		
 		}else {
 		
 			
