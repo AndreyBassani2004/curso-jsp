@@ -283,6 +283,7 @@ String sql = "select count(1) as total from model_login  where usuario_id = " + 
 			modelLogin.setLogin(resultado.getString("login"));
 			modelLogin.setNome(resultado.getString("nome"));
 			// modelLogin.setSenha(resultado.getString("senha"));
+			modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
 			modelLogin.setPerfil(resultado.getString("perfil"));
 			modelLogin.setSexo(resultado.getString("sexo"));
 			
@@ -318,7 +319,7 @@ String sql = "select count(1) as total from model_login  where usuario_id = " + 
 			// modelLogin.setSenha(resultado.getString("senha"));
 			modelLogin.setPerfil(resultado.getString("perfil"));
 			modelLogin.setSexo(resultado.getString("sexo"));
-			
+			modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
 			modelLogin.setTelefones(this.listFone(modelLogin.getId()));
 
 			retorno.add(modelLogin);

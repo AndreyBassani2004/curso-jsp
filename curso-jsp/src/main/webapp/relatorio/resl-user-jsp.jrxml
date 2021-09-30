@@ -111,7 +111,7 @@
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="d/M/yy" isBlankWhenNull="true">
 				<reportElement x="340" y="0" width="160" height="30" uuid="6a202a1f-b7b1-470b-b3ba-d7cdb872759b">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="60d61f2d-15ac-4030-bef7-eb8ad6578925"/>
 				</reportElement>
