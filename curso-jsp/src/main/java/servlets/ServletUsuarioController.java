@@ -249,7 +249,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			
 			String dataNascimento = request.getParameter("dataNascimento");
 			String rendaMensal = request.getParameter("rendamensal");
-
+			
 			rendaMensal = rendaMensal.split("\\ ")[1].replaceAll("\\.", "").replaceAll("\\,", ".");
 			
 			ModelLogin modelLogin = new ModelLogin();
