@@ -18,6 +18,22 @@ public class ReportUtil implements Serializable{
  
 	
 	@SuppressWarnings({"rawtypes", "unchecked"})
+	public byte[] geraRelatorioPDF(List listaDados,String nomeRelatorio,HashMap<String, Object> params, ServletContext servletContext) throws Exception{
+		
+		JRBeanCollectionDataSource jrbcds = new JRBeanCollectionDataSource(listaDados);
+		
+		String caminhoJasper = servletContext.getRealPath("relatorio") + File.separator + nomeRelatorio + ".jasper";
+		
+	
+		JasperPrint impressoraJasper = JasperFillManager.fillReport(caminhoJasper, params, jrbcds);
+		
+		return JasperExportManager.exportReportToPdf(impressoraJasper);
+	}
+	
+	
+	
+	
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	public byte[] geraRelatorioPDF(List listaDados,String nomeRelatorio, ServletContext servletContext) throws Exception{
 		
 		JRBeanCollectionDataSource jrbcds = new JRBeanCollectionDataSource(listaDados);

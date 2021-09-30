@@ -387,17 +387,16 @@
 
 	<script type="text/javascript">
 	
-	$(function(){
-		   $("#rendamensal").maskMoney({
-		      prefix: 'R$ ',
-		      allowNegative: true,
-		      thousands: '.',
-		      decimal: ','
-		   });
-		});
-	
-	$("#rendamensal").focus();
+	$("#rendamensal").maskMoney({showSymbol:true, symbol:"R$ ", decimal:",", thousands:"."});
 
+	const formatter = new Intl.NumberFormat('pt-BR', {
+	    currency : 'BRL',
+	    minimumFractionDigits : 2
+	});
+
+	$("#rendamensal").val(formatter.format($("#rendamensal").val()));
+
+	$("#rendamensal").focus();
 
 	var dataNascimento = $("#dataNascimento").val();
 
