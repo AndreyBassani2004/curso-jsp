@@ -24,6 +24,7 @@ import org.apache.commons.io.IOUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import beandto.BeanDtoGraficoSalarioUser;
 import dao.DAOUsuarioRepository;
 import model.ModelLogin;
 import util.ReportUtil;
@@ -180,6 +181,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			request.setAttribute("dataFinal", dataFinal);
 			request.getRequestDispatcher("principal/reluser.jsp").forward(request, response);
 		
+			
 		
 		}else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("imprimirRelatorioPDF")) {
 		
@@ -206,6 +208,25 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			response.setHeader("content-Disposition", "attachment;filename=arquivo.pdf");
 			response.getOutputStream().write(relatorio);
 		
+		
+		}else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("graficoSalario")) {	
+			String dataInicial = request.getParameter("dataInicial");
+			String dataFinal = request.getParameter("dataFinal");
+			
+			if(dataInicial == null || dataInicial.isEmpty() && dataFinal == null || dataFinal.isEmpty() ) {
+				
+				BeanDtoGraficoSalarioUser beanDtoGraficoSalarioUser = daoUsuarioRepository.montarGraficoSalarioMediaSalario(super.getUserLogado(request));
+				
+				 ObjectMapper mapper = new ObjectMapper();
+				 String json = mapper.writeValueAsString(beanDtoGraficoSalarioUser);
+				 
+				 response.getWriter().write(json);
+				
+			}else {
+				
+			}
+			
+			
 		}else {
 		
 			
