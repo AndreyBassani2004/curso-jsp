@@ -17,7 +17,7 @@ public class ReportUtil implements Serializable{
 	private static final long serialVersionUID = 1L; 
  
 	
-	@SuppressWarnings({"rawtypes", "unchecked"})
+	@SuppressWarnings({"rawtypes"})
 	public byte[] geraRelatorioPDF(List listaDados,String nomeRelatorio,HashMap<String, Object> params, ServletContext servletContext) throws Exception{
 		
 		JRBeanCollectionDataSource jrbcds = new JRBeanCollectionDataSource(listaDados);
